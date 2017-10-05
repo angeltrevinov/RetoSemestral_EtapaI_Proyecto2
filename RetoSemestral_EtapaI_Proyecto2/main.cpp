@@ -30,32 +30,38 @@ int main() {
         Sum = Sum + Array[i];
     }
     
-    int NumCu = 0, Mayor = Array[0];//Numero de prendas en cada lavadora, El mayor
-    int CantMov = 0, NumMenos = 0;// Cantidad de movimientos, Todos los otros numeros
+    double NumCu = 0;//Numero de prendas en cada lavadora
+    int Mayor = Array[0];// El mayor
+    int CantMov = 0;// Cantidad de movimientos
     
     NumCu = Sum / size;
     
-    if(NumCu >= 1){
-        //solo si se puede mover y tener todos iguales
-        for(int i = 0; i < size; i++){
-            
-            if(Array[i] > Mayor){
-                Mayor = Array[i];
-                Array[i] = 0;
-            }
-            
-            NumMenos = NumMenos + Array[i];
+    for(int i = 0; i < size; i++){
+        //para encontrar el mayor
+        if(Array[i] > Mayor){
+            Mayor = Array[i];
         }
         
-        CantMov = Mayor - NumMenos -1; //La cantidad de movimientos es el numero mayor - todo lo demas -1
-        
-    }else{
-        CantMov = -1;
-    }
-    
-    for(int i = 0; i < size; i++){
+        //numero de movimientos
+        if(Array[i] < NumCu){
+            CantMov++;
+        }
         Array[i] = NumCu;
     }
+    
+    if(NumCu > 1){
+        if(Mayor % 2 != 0){
+            CantMov++;
+        }
+        
+    }else if(NumCu == 1){
+        CantMov = Mayor -1;
+        
+    }else if(Mayor == 0){
+        CantMov = 0;
+    }else
+        CantMov = -1;
+    
     cout << CantMov << endl;
     
     return 0;
