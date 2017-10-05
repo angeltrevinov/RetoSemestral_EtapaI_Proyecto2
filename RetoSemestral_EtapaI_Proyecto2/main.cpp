@@ -30,37 +30,50 @@ int main() {
         Sum = Sum + Array[i];
     }
     
-    double NumCu = 0;//Numero de prendas en cada lavadora
-    int Mayor = Array[0];// El mayor
-    int CantMov = 0;// Cantidad de movimientos
+    int CantMov = 0; //la cantidad de movimientos
+    int PromVestidos = Sum / size; //este es el valor que todos los demas deben de tener
+    int Max = Array[size];
+    int mult = 1;
     
-    NumCu = Sum / size;
-    
-    for(int i = 0; i < size; i++){
-        //para encontrar el mayor
-        if(Array[i] > Mayor){
-            Mayor = Array[i];
-        }
-        
-        //numero de movimientos
-        if(Array[i] < NumCu){
-            CantMov++;
-        }
-        Array[i] = NumCu;
-    }
-    
-    if(NumCu > 1){
-        if(Mayor % 2 != 0){
-            CantMov++;
-        }
-        
-    }else if(NumCu == 1){
-        CantMov = Mayor -1;
-        
-    }else if(Mayor == 0){
-        CantMov = 0;
-    }else
+    if(Sum % size != 0 ){//aqui no se puede hacer el intercambio
         CantMov = -1;
+        
+    }else{//aqui puedes hacer el intercambio
+        
+        //aqui consigues el valor maximo
+        for(int i = 0; i< size; i++){
+            if(Array[i] > Max){
+                Max = Array[i];
+            }
+            
+            //aqui la cantidad de movimientos
+            if(Array[i] < PromVestidos && Max != 0){
+                CantMov++;
+            }
+            
+            Array[i] = PromVestidos;
+        }
+        
+        //aui hay lavadoras pero no hay ropa (no funciona)
+        if(Max == 0){
+            CantMov = 0;
+            
+        }else{
+            if(Max % 2 != 0)
+                CantMov++;
+            else if(Max == size)
+                CantMov = size -1;
+            else if(Max == 0)
+                CantMov = 0;
+            
+            while( Max == 0){
+                mult = Max / 10;
+                Max = Max %10;
+            }
+            
+            CantMov = CantMov * mult;
+        }
+    }
     
     cout << CantMov << endl;
     
