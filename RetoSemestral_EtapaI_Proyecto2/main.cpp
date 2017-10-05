@@ -7,6 +7,10 @@
  Reto Super Washing Machines
  */
 
+/*
+    NOTE: En leetcode tienes que cambiarlo a vectores porque lo pusieron adentro de una clase
+ */
+
 #include <iostream>
 
 using namespace std;
