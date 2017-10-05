@@ -47,24 +47,19 @@ int main() {
             }
             
             //aqui la cantidad de movimientos
-            if(Array[i] < PromVestidos && Max != 0){
+            if(Array[i] < PromVestidos){
                 CantMov++;
             }
             
             Array[i] = PromVestidos;
         }
         
-        //aui hay lavadoras pero no hay ropa (no funciona)
+        //aui hay lavadoras pero no hay ropa
         if(Max == 0){
             CantMov = 0;
-            
         }else{
             if(Max % 2 != 0)
                 CantMov++;
-            else if(Max == size)
-                CantMov = size -1;
-            else if(Max == 0)
-                CantMov = 0;
             
             while( Max == 0){
                 mult = Max / 10;
@@ -72,6 +67,7 @@ int main() {
             }
             
             CantMov = CantMov * mult;
+
         }
     }
     
