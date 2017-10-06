@@ -12,67 +12,37 @@
  */
 
 #include <iostream>
+#include <vector>
 
 using namespace std;
 
 int main() {
+    vector <int> machines;//esto lo quitas en codeleet
+    int Size = machines.size();
+    vector <int> Sum(Size + 1, 0);//aqui se va a guardar la cantidad que cada lavadora necesita
+    int CantMov = 0, Prom = 0;
     
-    int size;// numero de lavadoras
-    cin >> size;
-
-    int Array[size];//el array de lavadoras
-    
-    int Sum = 0; //suma total de prendas
-    
-    //aqui llena el Array con el numero de prendas en la lavadora
-    for(int i = 0; i < size; i++){
-        cin >> Array[i];
-        Sum = Sum + Array[i];
+    //aqui suma lo que esta en la posicion anterior en sum y la posicion en machines y lo guarda a lado para saber cuantos necesita
+    for(int i = 0; i < Size; i++){
+        Sum.at(i + 1) = Sum.at(i) + machines.at(i);
     }
-    
-    int CantMov = 0; //la cantidad de movimientos
-    int PromVestidos = Sum / size; //este es el valor que todos los demas deben de tener
-    int Max = 0;
-    int mult = 1;
-    
-    if(Sum % size != 0 ){//aqui no se puede hacer el intercambio
+    Prom = Sum.at(Size) / Size;
+    if(Sum.at(Size)  % Size){ //entra si no hay suficiente ropa para repartir equitativamente entre las lavadoras
         CantMov = -1;
         
-    }else{//aqui puedes hacer el intercambio
+    }else{//aqui entra solo si es posible repartir equitatvamente
         
-        //aqui consigues el valor maximo
-        for(int i = 0; i< size; i++){
-            if(Array[i] > Max){
-                Max = Array[i];
-            }
-            
-            //aqui la cantidad de movimientos
-            if(Array[i] < PromVestidos){
-                CantMov++;
-            }
-            
-            Array[i] = PromVestidos;
-        }
+        Prom = Sum.at(Size) / Size;
         
-        /*
-         falta cuando es par restarle menos dos
-         */
-        if(Max == 0){
-            CantMov = 0;
-        }else if(Max == size){
-            CantMov = size -1;
-        }else if(Max % 2 != 0)
-            CantMov++;
-        
-        while( Max / 10 != 0){
-                mult = Max / 10;
-                mult =  Max / mult;
-                Max = Max / 10;
-                CantMov = CantMov * mult;
+        for(int i= 0; i < Size; i++){
+            int Left = i * Prom - Sum.at(i); //guarda cuanto tienes a la izquierda comparado con el promedio
+            int Right = (Size - i - 1) * Prom - (Sum.at(Size) - Sum.at(i) - machines.at(i));//checa cuantos tienes en la derecha comparado con el promedio
+            if(Left > 0 && Right > 0)
+                CantMov = max(CantMov, abs(Left) + abs(Right));//max saca el valor mas grande entre los dos parametros
+            else
+                CantMov = max(CantMov, max(abs(Left), abs(Right)));
         }
     }
     
-    cout << CantMov << endl;
-    
-    return 0;
+    return CantMov;
 }
