@@ -32,7 +32,7 @@ int main() {
     
     int CantMov = 0; //la cantidad de movimientos
     int PromVestidos = Sum / size; //este es el valor que todos los demas deben de tener
-    int Max = Array[size];
+    int Max = 0;
     int mult = 1;
     
     if(Sum % size != 0 ){//aqui no se puede hacer el intercambio
@@ -54,20 +54,21 @@ int main() {
             Array[i] = PromVestidos;
         }
         
-        //aui hay lavadoras pero no hay ropa
+        /*
+         falta cuando es par restarle menos dos
+         */
         if(Max == 0){
             CantMov = 0;
-        }else{
-            if(Max % 2 != 0)
-                CantMov++;
-            
-            while( Max == 0){
+        }else if(Max == size){
+            CantMov = size -1;
+        }else if(Max % 2 != 0)
+            CantMov++;
+        
+        while( Max / 10 != 0){
                 mult = Max / 10;
-                Max = Max %10;
-            }
-            
-            CantMov = CantMov * mult;
-
+                mult =  Max / mult;
+                Max = Max / 10;
+                CantMov = CantMov * mult;
         }
     }
     
